@@ -4,8 +4,8 @@
 
 Get the dependency tree of your Python virtual environment.
 
-[![Build Status](https://travis-ci.com/Justintime50/easypost-cli.svg?branch=master)](https://travis-ci.com/Justintime50/easypost-cli)
-[![Licence](https://img.shields.io/github/license/justintime50/easypost-cli)](LICENSE)
+[![Build Status](https://travis-ci.com/Justintime50/pippin.svg?branch=master)](https://travis-ci.com/Justintime50/pippin)
+[![Licence](https://img.shields.io/github/license/justintime50/pippin)](LICENSE)
 
 <img src="assets/showcase.png" alt="Showcase">
 
