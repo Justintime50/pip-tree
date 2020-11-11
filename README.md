@@ -4,7 +4,7 @@
 
 Get the dependency tree of your Python virtual environment.
 
-[![Build Status](https://travis-ci.com/Justintime50/pippin.svg?branch=master)](https://travis-ci.com/Justintime50/pippin)
+[![Build Status](https://travis-ci.com/Justintime50/pippin.svg?branch=main)](https://travis-ci.com/Justintime50/pippin)
 [![Licence](https://img.shields.io/github/license/justintime50/pippin)](LICENSE)
 
 <img src="assets/showcase.png" alt="Showcase">
