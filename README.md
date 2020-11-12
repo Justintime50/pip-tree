@@ -11,7 +11,7 @@ Get the dependency tree of your Python virtual environment.
 
 </div>
 
-> "It comes in Pips?"
+> "It comes in pips?"
 
 There is no simple, native way to get the dependency tree of a Python virtual environment using Pip as the package manager. Pippin fixes this problem by retrieving every package from your virtual environment and returning the packages it depends on as well as what depends on that package. These results will print to console.
 
@@ -40,41 +40,27 @@ pippin ~/my_project/venv/bin/pip
 ```
 Generating Pippin Report for "~/my_project/venv/bin/pip"...
 
-Name: coverage
+Name: aiohttp
+Version: 3.6.2
+Requires: chardet, yarl, async-timeout, attrs, multidict
+Required-by: slackclient
+
+Name: astroid
+Version: 2.4.2
+Requires: six, lazy-object-proxy, wrapt
+Required-by: 
+
+Name: async-timeout
+Version: 3.0.1
 Requires: 
-Required-by: pytest-cov, coveralls
+Required-by: aiohttp
 
-Name: coveralls
-Requires: docopt, coverage, requests
-Required-by: 
-
-Name: flake8
-Requires: mccabe, pyflakes, pycodestyle
-Required-by: 
-
-Name: pip
+Name: attrs
+Version: 19.3.0
 Requires: 
-Required-by: 
+Required-by: aiohttp
 
-Name: PyGithub
-Requires: pyjwt, requests, deprecated
-Required-by: github-archive
-
-Name: pytest
-Requires: toml, attrs, pluggy, py, iniconfig, packaging
-Required-by: pytest-cov
-
-Name: pytest-cov
-Requires: coverage, pytest
-Required-by: 
-
-Name: requests
-Requires: urllib3, certifi, chardet, idna
-Required-by: PyGithub, coveralls
-
-Name: setuptools
-Requires: 
-Required-by: 
+...
 
 Pippin report complete! 9 dependencies found for "~/my_project/venv/bin/pip".
 ```
