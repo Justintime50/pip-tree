@@ -5,6 +5,8 @@
 Get the dependency tree of your Python virtual environment.
 
 [![Build Status](https://travis-ci.com/Justintime50/pippin.svg?branch=main)](https://travis-ci.com/Justintime50/pippin)
+[![Coverage Status](https://coveralls.io/repos/github/Justintime50/pippin/badge.svg?branch=main)](https://coveralls.io/github/Justintime50/pippin?branch=main)
+[![PyPi](https://img.shields.io/pypi/v/pippin)](https://pypi.org/project/pippin/)
 [![Licence](https://img.shields.io/github/license/justintime50/pippin)](LICENSE)
 
 <img src="assets/showcase.png" alt="Showcase">
@@ -20,19 +22,34 @@ Pippin is a quick and dirty solution to getting the dependency tree of your Pyth
 ## Install
 
 ```bash
-# Setup the tap
-brew tap justintime50/formulas
-
 # Install Pippin
-brew install pippin
+pip3 install pippin
+
+# Install locally
+make install
+
+# Get Makefile help
+make help
 ```
 
 ## Usage
 
-Invoke Pippin and pass an optional pip path (great for per-project virtual environments). If no optional pip path is passed, the pippin will attempt to use the system `pip3` installation.
+Invoke Pippin as a script and pass an optional pip path as an environment variable (great for per-project virtual environments). If no optional pip path is passed, then Pippin will attempt to use the system `pip3` installation.
 
 ```bash
-pippin ~/my_project/venv/bin/pip
+PIPPIN_PIP="~/my_project/venv/bin/pip" pippin
+```
+
+You can also import Pippin as a package and build custom logic for your needs. Pippin will return an array of json objects, each containing the name, version, packages required by the package, and what packages requires that package.
+
+```python
+from pippin import Pippin
+
+dependency_tree = Pippin.generate_dependency_tree(
+    pip='~/my_project/venv/bin/pip'
+)
+
+print(dependency_tree)
 ```
 
 **Sample Output**
@@ -40,37 +57,51 @@ pippin ~/my_project/venv/bin/pip
 ```
 Generating Pippin Report for "~/my_project/venv/bin/pip"...
 
-Name: aiohttp
-Version: 3.6.2
-Requires: chardet, yarl, async-timeout, attrs, multidict
-Required-by: slackclient
+[
+    {
+        "name": "aiohttp",
+        "version": "3.6.2",
+        "requires": "async-timeout, multidict, attrs, yarl, chardet",
+        "required-by": "slackclient"
+    },
+    {
+        "name": "astroid",
+        "version": "2.4.2",
+        "requires": "six, wrapt, lazy-object-proxy",
+        "required-by": ""
+    },
+    {
+        "name": "async-timeout",
+        "version": "3.0.1",
+        "requires": "",
+        "required-by": "aiohttp"
+    },
+    {
+        "name": "attrs",
+        "version": "19.3.0",
+        "requires": "",
+        "required-by": "aiohttp"
+    },
+    ...
+]
 
-Name: astroid
-Version: 2.4.2
-Requires: six, lazy-object-proxy, wrapt
-Required-by: 
-
-Name: async-timeout
-Version: 3.0.1
-Requires: 
-Required-by: aiohttp
-
-Name: attrs
-Version: 19.3.0
-Requires: 
-Required-by: aiohttp
-
-...
-
-Pippin report complete! 9 dependencies found for "~/my_project/venv/bin/pip".
+Pippin report complete! 40 dependencies found for "~/my_project/venv/bin/pip".
 ```
 
 ## Development
 
-```
-shellcheck src/*.sh
+```bash
+# Lint the project
+make lint
+
+# Run tests
+make test
+
+# Run test coverage
+make coverage
 ```
 
 ## Attribution
 
+- [GitHub Issue](https://github.com/pypa/pip/issues/5261#issuecomment-388173430) that helped with the refactor to Python
 - Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>

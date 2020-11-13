@@ -1,3 +1,26 @@
-language: bash
+language: python
 
-script: shellcheck src/*.sh
+python:
+    - '3.6'
+    - '3.7'
+    - '3.8'
+
+install: pip install -e ."[dev]"
+
+script: 
+    - flake8 pippin/*.py
+    - flake8 test/*.py
+    - pytest --cov=pippin --cov-branch
+    - shellcheck legacy/*.sh
+
+deploy:
+    provider: pypi
+    username: "__token__"
+    password:
+        secure: Ew8PL/Q0NZGD9r0JYtj+KsCreU+uiW2bMO4HbN/1KnooEfYOwgFGD6C89eAXsIxSbWgZW+zb5gh+89fztJ3pYhKV+k50uyAAD0qg6RXWufnJda+Tq6SQAQboSuPOXq3zV/QtxTYQtIB0D54DPbM/ww/EHP0Xymu6Ex/AMbDjShn+wgVAHeQCJlnXK+ZtLgof8Kh8LjwE3x2HjhWE/Remolb4Cz+N+zP5atQ+ht2/0QJwKUKT0WS6Bh4KKD3yrG4bI3/VRk6DVT8hcQN3JyYPDgPu5NzqXAqhhpSZwRYi/lyDK8V3S4om0/ptmWsgNCpQmjBJ2ooH2bbtFMHt6B3DQ1PkbcYo8CzZOF/EjnoqMZZijO+S8piBtbbVY60rdZyesvoy5H2CLPvybMNtv6qr+iyBYin7yYgNXzGViL7WtsLtRcO2CBVjSaGA6mjfYt0G8ETCzLW2KTuCaCIMIVMuFKl4IC+St8s9bGYdBhSnaYLIblmdNAd2EzoWtoWTD1FhmzixfmUDwdvsuHa8+RFKQlz8UoT02Mns+s2DcMi+lB2QnS43Rg10W0yDYqZ/qjkXpiidlBopw07mQkh9ukgWfXv0h7EiLEAZXRPY6DwatzSWwVDmZ8/eCYaZXLvmqGitgRBDbxjZdX0wsVDU5lmizgY30WOoKhI+j4f8VSAHin4=
+    on:
+        tags: true
+    skip_existing: true
+
+after_success:
+    - coveralls
