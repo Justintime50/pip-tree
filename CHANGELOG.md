@@ -6,7 +6,7 @@
 * Now retrieve the pip list as JSON
 * Now retrieve the pip package details as RFC-compliant mail header format
 * Now with Python, we shell out to pip and run the commands but retrieve the data as machine parseable instead of human readable and chopping it up after the fact
-* Updated docs, added Makefile
+* Added unit tests, updated docs, added Makefile
 
 ## v0.2.0 (2020-11-12)
 
