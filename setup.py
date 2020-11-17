@@ -4,12 +4,12 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='pippin',
+    name='pip-tree',
     version='0.3.0',
-    description='Get the dependency tree of your Python virtual environment.',
+    description='Get the dependency tree of your Python virtual environment via Pip.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='http://github.com/justintime50/pippin',
+    url='http://github.com/justintime50/pip-tree',
     author='Justintime50',
     license='MIT',
     packages=setuptools.find_packages(),
@@ -29,7 +29,7 @@ setuptools.setup(
     },
     entry_points={
         'console_scripts': [
-            'pippin=pippin.pip:main'
+            'pip-tree=pip_tree.tree:main'
         ]
     },
     python_requires='>=3.6',

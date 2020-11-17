@@ -8,9 +8,9 @@ python:
 install: pip install -e ."[dev]"
 
 script: 
-    - flake8 pippin/*.py
+    - flake8 pip_tree/*.py
     - flake8 test/*.py
-    - pytest --cov=pippin --cov-branch
+    - pytest --cov=pip_tree --cov-branch
     - shellcheck legacy/*.sh
 
 deploy:
