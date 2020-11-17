@@ -8,20 +8,20 @@ PIP = os.getenv('PIPPIN_PIP', 'pip3')
 TIMEOUT = 10
 
 
-class Pippin():
+class PipTree():
     @classmethod
     def _generate_console_output(cls):
-        """Take the output of the dependency tree and print to console
+        """Take the output of the dependency tree and print to console.
         """
-        print(f'Generating Pippin report for "{PIP}"...')
+        print(f'Generating Pip Tree report for "{PIP}"...')
         console_output, number_of_dependencies = cls.generate_dependency_tree(PIP)
         print(json.dumps(console_output, indent=4))
-        print(f'Pippin report complete! {number_of_dependencies} dependencies found for "{PIP}".')
+        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP}".')
 
     @classmethod
     def generate_dependency_tree(cls, pip='pip3'):
         """Generate the dependency tree of your pip virtual environment
-        and print to console
+        and print to console.
         """
         package_list = cls.get_pip_package_list(pip)
         dependency_tree, number_of_dependencies = cls.get_package_dependencies(package_list, pip)
@@ -29,7 +29,7 @@ class Pippin():
 
     @classmethod
     def get_pip_package_list(cls, pip='pip3'):
-        """Get the pip package list of the virtual environment
+        """Get the pip package list of the virtual environment.
         """
         try:
             command = f'{PIP} list --format=json'
@@ -79,7 +79,7 @@ class Pippin():
 
 
 def main():
-    Pippin._generate_console_output()
+    PipTree._generate_console_output()
 
 
 if __name__ == '__main__':
