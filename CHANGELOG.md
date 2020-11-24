@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.5.0 (2020-11-24)
+
+* Removes pip version warnings from output
+* Fixes `local variable 'i' referenced before assignment` error
+* Matching pip command timeout by setting the subprocess timeout to 15 from 10 seconds
+* Running pip commands in isolated mode which ignores custom configuration
+* Running pip commands while skipping user input (if ever applicable)
+* Small speed improvements were made by shifting logic around
+
 ## v0.4.0 (2020-11-24)
 
 * Fixed reference of `PIPPIN_PIP` to `PIP_PATH` now that the package has been renamed
