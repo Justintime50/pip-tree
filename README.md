@@ -33,17 +33,17 @@ make help
 Invoke Pip Tree as a script and pass an optional pip path as an environment variable (great for per-project virtual environments). If no optional pip path is passed, then Pip Tree will attempt to use the system `pip3` installation.
 
 ```bash
-PIPPIN_PIP="~/my_project/venv/bin/pip" pip-tree
+PIP_PATH="~/my_project/venv/bin/pip" pip-tree
 ```
 
 You can also import Pip Tree as a package and build custom logic for your needs. Pip Tree will return an array of json objects, each containing the name, version, packages required by the package, and what packages requires that package.
 
+Set an optional pip path as an environment variable: `PIP_PATH="~/my_project/venv/bin/pip"`
+
 ```python
 from pip_tree import PipTree
 
-dependency_tree = PipTree.generate_dependency_tree(
-    pip='~/my_project/venv/bin/pip'
-)
+dependency_tree = PipTree.generate_dependency_tree()
 
 print(dependency_tree)
 ```

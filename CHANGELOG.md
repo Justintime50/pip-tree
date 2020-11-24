@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 0.3.0 (2020-11-16)
+## v0.4.0 (2020-11-24)
+
+* Fixed reference of `PIPPIN_PIP` to `PIP_PATH` now that the package has been renamed
+* Removed unused pip variables in favor of the constant `PIP_PATH`
+* Updated documentation
+
+## v0.3.0 (2020-11-16)
 
 * Refactored Pippin from a shell script to a Python script
 * Now retrieve the pip list as JSON

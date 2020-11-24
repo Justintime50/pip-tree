@@ -4,7 +4,7 @@ import json
 from email.parser import BytesHeaderParser
 
 
-PIP = os.getenv('PIPPIN_PIP', 'pip3')
+PIP_PATH = os.getenv('PIP_PATH', 'pip3')
 TIMEOUT = 10
 
 
@@ -13,26 +13,26 @@ class PipTree():
     def _generate_console_output(cls):
         """Take the output of the dependency tree and print to console.
         """
-        print(f'Generating Pip Tree report for "{PIP}"...')
-        console_output, number_of_dependencies = cls.generate_dependency_tree(PIP)
+        print(f'Generating Pip Tree report for "{PIP_PATH}"...')
+        console_output, number_of_dependencies = cls.generate_dependency_tree()
         print(json.dumps(console_output, indent=4))
-        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP}".')
+        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP_PATH}".')  # noqa
 
     @classmethod
-    def generate_dependency_tree(cls, pip='pip3'):
+    def generate_dependency_tree(cls):
         """Generate the dependency tree of your pip virtual environment
         and print to console.
         """
-        package_list = cls.get_pip_package_list(pip)
-        dependency_tree, number_of_dependencies = cls.get_package_dependencies(package_list, pip)
+        package_list = cls.get_pip_package_list()
+        dependency_tree, number_of_dependencies = cls.get_package_dependencies(package_list)
         return dependency_tree, number_of_dependencies
 
     @classmethod
-    def get_pip_package_list(cls, pip='pip3'):
+    def get_pip_package_list(cls):
         """Get the pip package list of the virtual environment.
         """
         try:
-            command = f'{PIP} list --format=json'
+            command = f'{PIP_PATH} list --format=json'
             package_list_output = subprocess.check_output(
                 command,
                 stdin=None,
@@ -48,13 +48,13 @@ class PipTree():
         return parsed_output
 
     @classmethod
-    def get_package_dependencies(cls, package_list, pip='pip3'):
+    def get_package_dependencies(cls, package_list):
         """Get a single package dependencies and return a json object
         """
         final_list = []
         for i, package in enumerate(package_list):
             try:
-                command = f'{PIP} show {package["name"]}'
+                command = f'{PIP_PATH} show {package["name"]}'
                 package_output = subprocess.check_output(
                     command,
                     stdin=None,
