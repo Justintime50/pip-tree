@@ -1,9 +1,9 @@
+import json
+import subprocess
+
 import mock
 import pytest
-import subprocess
-import json
 from pip_tree import PipTree
-
 
 MOCK_PACKAGE_LIST = [
     {
@@ -34,7 +34,7 @@ def test__generate_console_output(mock_dependency_tree):
 
 
 @mock.patch('pip_tree.tree.PipTree.get_pip_package_list', return_value=[{'name': 'mock-package'}])
-@mock.patch('pip_tree.tree.PipTree.get_package_dependencies', return_value=[{'Name': 'mock-package'}, 40])  # noqa
+@mock.patch('pip_tree.tree.PipTree.get_package_dependencies', return_value=[{'Name': 'mock-package'}, 40])
 def test_generate_dependency_tree(mock_get_package_dependencies, mock_get_pip_package_list):
     PipTree.generate_dependency_tree()
     mock_get_pip_package_list.assert_called_once()
@@ -47,7 +47,7 @@ def test_get_pip_package_list_works(mock_subprocess):
     assert isinstance(output, list)
 
 
-@mock.patch('subprocess.check_output', side_effect=subprocess.TimeoutExpired(cmd=subprocess.check_output, timeout=0.1))  # noqa
+@mock.patch('subprocess.check_output', side_effect=subprocess.TimeoutExpired(cmd=subprocess.check_output, timeout=0.1))
 def test_get_pip_package_list_timeout(mock_timeout):
     with pytest.raises(subprocess.TimeoutExpired):
         PipTree.get_pip_package_list()
@@ -66,7 +66,7 @@ def test_get_package_dependencies_works(mock_subprocess):
     assert isinstance(final_list, dict)
 
 
-@mock.patch('subprocess.check_output', side_effect=subprocess.TimeoutExpired(cmd=subprocess.check_output, timeout=0.1))  # noqa
+@mock.patch('subprocess.check_output', side_effect=subprocess.TimeoutExpired(cmd=subprocess.check_output, timeout=0.1))
 def test_get_package_dependencies_timeout(mock_timeout):
     package_list = [{'name': 'mock-package'}]
     with pytest.raises(subprocess.TimeoutExpired):
