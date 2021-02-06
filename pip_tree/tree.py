@@ -1,8 +1,7 @@
+import json
 import os
 import subprocess
-import json
 from email.parser import BytesHeaderParser
-
 
 PIP_PATH = os.getenv('PIP_PATH', 'pip3')
 TIMEOUT = 15
@@ -16,7 +15,7 @@ class PipTree():
         print(f'Generating Pip Tree report for "{PIP_PATH}"...')
         console_output, number_of_dependencies = cls.generate_dependency_tree()
         print(json.dumps(console_output, indent=4))
-        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP_PATH}".')  # noqa
+        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP_PATH}".')
 
     @classmethod
     def generate_dependency_tree(cls):
@@ -66,8 +65,7 @@ class PipTree():
                 raise subprocess.TimeoutExpired(command, TIMEOUT)
             except subprocess.CalledProcessError:
                 raise subprocess.CalledProcessError(127, command)
-            parsed_package_output = BytesHeaderParser().parsebytes(
-                package_output)
+            parsed_package_output = BytesHeaderParser().parsebytes(package_output)
             final_package_output = {
                 'name': parsed_package_output['Name'],
                 'version': parsed_package_output['Version'],
