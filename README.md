@@ -50,7 +50,7 @@ print(dependency_tree)
 
 **Sample Output**
 
-```
+```json
 Generating Pip Tree Report for "path/to/my_project/venv/bin/pip"...
 
 [
@@ -77,8 +77,7 @@ Generating Pip Tree Report for "path/to/my_project/venv/bin/pip"...
         "version": "19.3.0",
         "requires": "",
         "required-by": "aiohttp"
-    },
-    ...
+    }
 ]
 
 Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/bin/pip".
