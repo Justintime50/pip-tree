@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='pip-tree',
-    version='0.5.0',
+    version='1.0.0',
     description='Get the dependency tree of your Python virtual environment via Pip.',
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -13,7 +13,7 @@ Get the dependency tree of your Python virtual environment via Pip.
 
 </div>
 
-There is no simple, native way to get the dependency tree of a Python virtual environment using Pip as the package manager. Pip Tree fixes this problem by retrieving every package from your virtual environment and returning the packages it depends on as well as what depends on that package. These results will print to console.
+There is no simple, native way to get the dependency tree of a Python virtual environment using the Pip package manager for Python. Pip Tree fixes this problem by retrieving every package from your virtual environment and returning a list of JSON objects that include the package name, version installed, date updated, and which packages are required by each package (the tree).
 
 ## Install
 
@@ -30,57 +30,65 @@ make help
 
 ## Usage
 
-Invoke Pip Tree as a script and pass an optional pip path as an environment variable (great for per-project virtual environments). If no optional pip path is passed, then Pip Tree will attempt to use the system `pip3` installation.
+```
+Usage:
+    pip-tree --path "path/to/my_project/venv/lib/python3.9/site-packages"
 
-```bash
-PIP_PATH="path/to/my_project/venv/bin/pip" pip-tree
+Options:
+    -h, --help            show this help message and exit
+    -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment.
 ```
 
-You can also import Pip Tree as a package and build custom logic for your needs. Pip Tree will return an array of json objects, each containing the name, version, packages required by the package, and what packages requires that package.
-
-Set an optional pip path as an environment variable: `PIP_PATH="path/to/my_project/venv/bin/pip"`
+**Package**
 
 ```python
 from pip_tree import PipTree
 
-dependency_tree = PipTree.generate_dependency_tree()
+path = 'path/to/my_project/venv/lib/python3.9/site-packages'
 
-print(dependency_tree)
+package_list = PipTree.get_pip_package_list(path)
+for package in package_list:
+    package_object = PipTree.get_package_object(package)
+    package_details = PipTree.get_package_details(package_object)
+    print(package_details.project_name)
 ```
 
 **Sample Output**
 
 ```json
-Generating Pip Tree Report for "path/to/my_project/venv/bin/pip"...
+Generating Pip Tree Report...
 
 [
     {
-        "name": "aiohttp",
-        "version": "3.6.2",
-        "requires": "async-timeout, multidict, attrs, yarl, chardet",
-        "required-by": "slackclient"
+        "name": "docopt",
+        "version": "0.6.2",
+        "updated": "2021-05-12",
+        "requires": []
     },
     {
-        "name": "astroid",
-        "version": "2.4.2",
-        "requires": "six, wrapt, lazy-object-proxy",
-        "required-by": ""
+        "name": "flake8",
+        "version": "3.9.2",
+        "updated": "2021-05-12",
+        "requires": [
+            "mccabe<0.7.0,>=0.6.0",
+            "pyflakes<2.4.0,>=2.3.0",
+            "pycodestyle<2.8.0,>=2.7.0"
+        ]
     },
     {
-        "name": "async-timeout",
-        "version": "3.0.1",
-        "requires": "",
-        "required-by": "aiohttp"
-    },
-    {
-        "name": "attrs",
-        "version": "19.3.0",
-        "requires": "",
-        "required-by": "aiohttp"
+        "name": "Flask",
+        "version": "2.0.0",
+        "updated": "2021-05-12",
+        "requires": [
+            "itsdangerous>=2.0",
+            "click>=7.1.2",
+            "Werkzeug>=2.0",
+            "Jinja2>=3.0"
+        ]
     }
 ]
 
-Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/bin/pip".
+Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
 ```
 
 ## Development
@@ -98,5 +106,4 @@ make coverage
 
 ## Attribution
 
-- [GitHub Issue](https://github.com/pypa/pip/issues/5261#issuecomment-388173430) that helped with the refactor to Python
 - Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
