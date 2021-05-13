@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.0.0 (2021-05-13)
+
+* Switched from shelling out to Pip to using the internal Pip API natively via Python (closes #4 and closes #2)
+* Adds `updated` field indicating when the package was installed or updated (closes #5)
+* The `requires` and `required-by` keys are now lists instead of comma separated strings, they also include the version the requirements are pinned to
+* Separated out code better
+* 100% code coverage
+* Converted classmethods to staticmethods
+
 ## v0.5.0 (2020-11-24)
 
 * Removes pip version warnings from output
