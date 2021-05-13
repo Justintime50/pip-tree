@@ -30,8 +30,6 @@ make help
 
 ## Usage
 
-Invoke Pip Tree as a script and pass a pip path as an environment variable (great for per-project virtual environments).
-
 ```
 Usage:
     pip-tree --path "path/to/my_project/venv/lib/python3.9/site-packages"
@@ -41,7 +39,7 @@ Options:
     -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment.
 ```
 
-Import pip_tree and build custom logic.
+**Package**
 
 ```python
 from pip_tree import PipTree
