@@ -1,84 +1,115 @@
+import argparse
+import datetime
 import json
 import os
-import subprocess
-from email.parser import BytesHeaderParser
+import re
+import time
 
-PIP_PATH = os.getenv('PIP_PATH', 'pip3')
-TIMEOUT = 15
+import pkg_resources
+
+
+class PipTreeCli():
+    def __init__(self):
+        parser = argparse.ArgumentParser(
+            description=(
+                'Get the dependency tree of your Python virtual environment via Pip.'
+            )
+        )
+        parser.add_argument(
+            '-p',
+            '--path',
+            required=True,
+            help='The path to the site-packages directory of a Python virtual environment.',
+        )
+        parser.parse_args(namespace=self)
+
+    def generate_console_output(self):
+        """Take the output of the dependency tree and print to console.
+        """
+        print('Generating Pip Tree report...')
+        final_output, package_count = PipTree.generate_pip_tree(self.path)
+        print(json.dumps(final_output, indent=4))
+        print(f'Pip Tree report complete! {package_count} dependencies found for "{self.path}".')
 
 
 class PipTree():
-    @classmethod
-    def _generate_console_output(cls):
-        """Take the output of the dependency tree and print to console.
+    @staticmethod
+    def generate_pip_tree(path):
+        """Generate the Pip Tree of the virtual environment specified.
         """
-        print(f'Generating Pip Tree report for "{PIP_PATH}"...')
-        console_output, number_of_dependencies = cls.generate_dependency_tree()
-        print(json.dumps(console_output, indent=4))
-        print(f'Pip Tree report complete! {number_of_dependencies} dependencies found for "{PIP_PATH}".')
-
-    @classmethod
-    def generate_dependency_tree(cls):
-        """Generate the dependency tree of your pip virtual environment
-        and print to console.
-        """
-        package_list = cls.get_pip_package_list()
-        dependency_tree, number_of_dependencies = cls.get_package_dependencies(package_list)
-        return dependency_tree, number_of_dependencies
-
-    @classmethod
-    def get_pip_package_list(cls):
-        """Get the pip package list of the virtual environment.
-        """
-        try:
-            command = f'{PIP_PATH} list --format=json --disable-pip-version-check --isolated --no-input'
-            package_list_output = subprocess.check_output(
-                command,
-                stdin=None,
-                stderr=None,
-                shell=True,
-                timeout=TIMEOUT
-            )
-        except subprocess.TimeoutExpired:
-            raise subprocess.TimeoutExpired(command, TIMEOUT)
-        except subprocess.CalledProcessError:
-            raise subprocess.CalledProcessError(127, command)
-        return json.loads(package_list_output)
-
-    @classmethod
-    def get_package_dependencies(cls, package_list):
-        """Get a single package dependencies and return a json object
-        """
-        final_list = []
+        pip_tree_results = []
+        required_by_dict = {}
         package_count = 0
-        for package in package_list:
-            try:
-                command = f'{PIP_PATH} show {package["name"]} --disable-pip-version-check  --isolated --no-input'
-                package_output = subprocess.check_output(
-                    command,
-                    stdin=None,
-                    stderr=None,
-                    shell=True,
-                    timeout=TIMEOUT
-                )
-            except subprocess.TimeoutExpired:
-                raise subprocess.TimeoutExpired(command, TIMEOUT)
-            except subprocess.CalledProcessError:
-                raise subprocess.CalledProcessError(127, command)
-            parsed_package_output = BytesHeaderParser().parsebytes(package_output)
-            final_package_output = {
-                'name': parsed_package_output['Name'],
-                'version': parsed_package_output['Version'],
-                'requires': parsed_package_output['Requires'],
-                'required-by': parsed_package_output['Required-by'],
-            }
-            final_list.append(final_package_output)
+        packages = PipTree.get_pip_package_list(path)
+
+        for package in packages:
+            package_object = PipTree.get_package_object(package)
+            package_details = PipTree.get_package_details(package_object)
+            PipTree.generate_reverse_requires_field(required_by_dict, package_details)
+            pip_tree_results.append(package_details)
             package_count += 1
-        return final_list, package_count
+
+        # Append the `required_by` field to each record
+        for item in pip_tree_results:
+            item['required_by'] = sorted(required_by_dict.get(item['name'], []))
+
+        final_output = sorted(pip_tree_results, key=lambda k: k['name'].lower())
+
+        return final_output, package_count
+
+    @staticmethod
+    def get_pip_package_list(path):
+        """Get the pip package list of the virtual environment.
+
+        Must be a path like: /project/venv/lib/python3.9/site-packages
+        """
+        packages = pkg_resources.find_distributions(path)
+        return packages
+
+    @staticmethod
+    def get_package_object(package):
+        """Returns a package object from Pip.
+        """
+        package_object = pkg_resources.get_distribution(package)
+        return package_object
+
+    @staticmethod
+    def get_package_details(package):
+        """Build a dictionary of details for a package from Pip.
+        """
+        package_update_at = time.ctime(os.path.getctime(package.location))
+        requires_list = [sorted(str(requirement) for requirement in package.requires())]
+        package_details = {
+            'name': package.project_name,
+            'version': package.version,
+            'updated': datetime.datetime.strptime(package_update_at, "%a %b %d %H:%M:%S %Y").strftime("%Y-%m-%d"),
+            'requires': [item for sublist in requires_list for item in sublist],
+        }
+        return package_details
+
+    @staticmethod
+    def generate_reverse_requires_field(required_by_dict, package_details):
+        """Generate a reversed list from the `requires` fields and create a collection
+        of each `required_by` fields so each package can show what it's required_by
+        """
+        requires_list = [item for item in package_details['requires']]
+        for required_by_package in requires_list:
+            word = re.compile(r'^(\w)+')
+            required_by_package_name = word.match(required_by_package).group()
+
+            if required_by_dict.get(required_by_package_name):
+                required_by_dict[required_by_package_name].append(package_details['name'])
+            else:
+                required_by_dict.update(
+                    {
+                        required_by_package_name: [package_details['name']]
+                    }
+                )
+        return required_by_dict
 
 
 def main():
-    PipTree._generate_console_output()
+    PipTreeCli().generate_console_output()
 
 
 if __name__ == '__main__':
