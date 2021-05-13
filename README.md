@@ -63,7 +63,10 @@ Generating Pip Tree Report...
         "name": "docopt",
         "version": "0.6.2",
         "updated": "2021-05-12",
-        "requires": []
+        "requires": [],
+        "required_by": [
+            "coveralls"
+        ]
     },
     {
         "name": "flake8",
@@ -73,7 +76,8 @@ Generating Pip Tree Report...
             "mccabe<0.7.0,>=0.6.0",
             "pyflakes<2.4.0,>=2.3.0",
             "pycodestyle<2.8.0,>=2.7.0"
-        ]
+        ],
+        "required_by": []
     },
     {
         "name": "Flask",
@@ -84,7 +88,8 @@ Generating Pip Tree Report...
             "click>=7.1.2",
             "Werkzeug>=2.0",
             "Jinja2>=3.0"
-        ]
+        ],
+        "required_by": []
     }
 ]
 
