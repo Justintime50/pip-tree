@@ -12,7 +12,7 @@ def get_python_version():
 @mock.patch('pip_tree.tree.PIP_PATH', f'./venv/lib/python{get_python_version()}/site-packages')
 def test_get_package_details(expected_tree_output, expected_package_count):
     package_details, package_count = PipTree.generate_pip_tree()
-    assert package_details == expected_tree_output
+    assert expected_tree_output in package_details
     assert package_count == expected_package_count
 
 
