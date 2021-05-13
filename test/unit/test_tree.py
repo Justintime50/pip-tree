@@ -1,9 +1,15 @@
+import sys
+
 import mock
 import pytest
 from pip_tree import PipTree
 
 
-@mock.patch('pip_tree.tree.PIP_PATH', './venv/lib/python3.9/site-packages')
+def get_python_version():
+    return sys.version.split(' ')[0][:3]
+
+
+@mock.patch('pip_tree.tree.PIP_PATH', f'./venv/lib/python{get_python_version()}/site-packages')
 def test_get_package_details(expected_tree_output, expected_package_count):
     package_details, package_count = PipTree.generate_pip_tree()
     assert package_details == expected_tree_output
