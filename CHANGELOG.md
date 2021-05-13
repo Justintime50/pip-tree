@@ -5,7 +5,8 @@
 * Switched from shelling out to Pip to using the internal Pip API natively via Python (closes #4 and closes #2), this change makes the previous ~1 minute operation now take ~1 second!
 * Adds `updated` field indicating when the package was installed or updated (closes #5)
 * The `requires` and `required-by` keys are now lists instead of comma separated strings, they also include the version the requirements are pinned to
-* Separated out code better
+* Using `argparse` instead of environment variable to specify path to site-packages
+* Separated out code better into classes and additional functions
 * 100% code coverage
 * Converted classmethods to staticmethods
 

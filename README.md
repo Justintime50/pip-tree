@@ -32,8 +32,13 @@ make help
 
 Invoke Pip Tree as a script and pass a pip path as an environment variable (great for per-project virtual environments).
 
-```bash
-PIP_PATH="path/to/my_project/venv/lib/python3.9/site-packages" pip-tree
+```
+Usage:
+    pip-tree --path "path/to/my_project/venv/lib/python3.9/site-packages"
+
+Options:
+    -h, --help            show this help message and exit
+    -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment.
 ```
 
 Import pip_tree and build custom logic.
@@ -41,7 +46,9 @@ Import pip_tree and build custom logic.
 ```python
 from pip_tree import PipTree
 
-package_list = PipTree.get_pip_package_list()
+path = 'path/to/my_project/venv/lib/python3.9/site-packages'
+
+package_list = PipTree.get_pip_package_list(path)
 for package in package_list:
     package_object = PipTree.get_package_object(package)
     package_details = PipTree.get_package_details(package_object)

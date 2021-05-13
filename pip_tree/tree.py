@@ -1,3 +1,4 @@
+import argparse
 import datetime
 import json
 import os
@@ -6,30 +7,40 @@ import time
 
 import pkg_resources
 
-PIP_PATH = os.getenv('PIP_PATH')
+
+class PipTreeCli():
+    def __init__(self):
+        parser = argparse.ArgumentParser(
+            description=(
+                'Get the dependency tree of your Python virtual environment via Pip.'
+            )
+        )
+        parser.add_argument(
+            '-p',
+            '--path',
+            required=True,
+            help='The path to the site-packages directory of a Python virtual environment.',
+        )
+        parser.parse_args(namespace=self)
+
+    def generate_console_output(self):
+        """Take the output of the dependency tree and print to console.
+        """
+        print('Generating Pip Tree report...')
+        final_output, package_count = PipTree.generate_pip_tree(self.path)
+        print(json.dumps(final_output, indent=4))
+        print(f'Pip Tree report complete! {package_count} dependencies found for "{self.path}".')
 
 
 class PipTree():
     @staticmethod
-    def generate_console_output():
-        """Take the output of the dependency tree and print to console.
-        """
-        print('Generating Pip Tree report...')
-        final_output, package_count = PipTree.generate_pip_tree()
-        print(json.dumps(final_output, indent=4))
-        print(f'Pip Tree report complete! {package_count} dependencies found for "{PIP_PATH}".')
-
-    @staticmethod
-    def generate_pip_tree():
+    def generate_pip_tree(path):
         """Generate the Pip Tree of the virtual environment specified.
         """
-        if not PIP_PATH:
-            raise ValueError('PIP_PATH environment variable is required to run Pip Tree.')
-
         pip_tree_results = []
         required_by_dict = {}
         package_count = 0
-        packages = PipTree.get_pip_package_list()
+        packages = PipTree.get_pip_package_list(path)
 
         for package in packages:
             package_object = PipTree.get_package_object(package)
@@ -47,12 +58,12 @@ class PipTree():
         return final_output, package_count
 
     @staticmethod
-    def get_pip_package_list():
+    def get_pip_package_list(path):
         """Get the pip package list of the virtual environment.
 
         Must be a path like: /project/venv/lib/python3.9/site-packages
         """
-        packages = pkg_resources.find_distributions(PIP_PATH)
+        packages = pkg_resources.find_distributions(path)
         return packages
 
     @staticmethod
@@ -98,7 +109,7 @@ class PipTree():
 
 
 def main():
-    PipTree.generate_console_output()
+    PipTreeCli().generate_console_output()
 
 
 if __name__ == '__main__':
