@@ -22,7 +22,8 @@ def test_get_package_details():
     assert any(item['name'] == 'pytest-cov' for item in package_details)
     assert any('toml' in item['requires'] for item in package_details)
     assert any('pytest' in item['required_by'] for item in package_details)
-    assert package_count == 25  # The number of dependencies that are contained in this virtual env.
+    assert package_count > 1
+    assert type(package_count) == int
 
 
 @mock.patch('pip_tree.tree.PIP_PATH', None)
