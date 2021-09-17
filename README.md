@@ -9,7 +9,7 @@ Get the dependency tree of your Python virtual environment via Pip.
 [![PyPi](https://img.shields.io/pypi/v/pip-tree)](https://pypi.org/project/pip-tree/)
 [![Licence](https://img.shields.io/github/license/justintime50/pip-tree)](LICENSE)
 
-<img src="assets/showcase.png" alt="Showcase">
+<img src="https://raw.githubusercontent.com/justintime50/assets/main/src/pip-tree/showcase.png" alt="Showcase">
 
 </div>
 
@@ -108,7 +108,3 @@ make test
 # Run test coverage
 make coverage
 ```
-
-## Attribution
-
-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
