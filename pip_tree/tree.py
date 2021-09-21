@@ -8,12 +8,10 @@ import time
 import pkg_resources
 
 
-class PipTreeCli():
+class PipTreeCli:
     def __init__(self):
         parser = argparse.ArgumentParser(
-            description=(
-                'Get the dependency tree of your Python virtual environment via Pip.'
-            )
+            description='Get the dependency tree of your Python virtual environment via Pip.'
         )
         parser.add_argument(
             '-p',
@@ -24,19 +22,17 @@ class PipTreeCli():
         parser.parse_args(namespace=self)
 
     def generate_console_output(self):
-        """Take the output of the dependency tree and print to console.
-        """
+        """Take the output of the dependency tree and print to console."""
         print('Generating Pip Tree report...')
         final_output, package_count = PipTree.generate_pip_tree(self.path)
         print(json.dumps(final_output, indent=4))
         print(f'Pip Tree report complete! {package_count} dependencies found for "{self.path}".')
 
 
-class PipTree():
+class PipTree:
     @staticmethod
     def generate_pip_tree(path):
-        """Generate the Pip Tree of the virtual environment specified.
-        """
+        """Generate the Pip Tree of the virtual environment specified."""
         pip_tree_results = []
         required_by_dict = {}
         package_count = 0
@@ -64,19 +60,19 @@ class PipTree():
         Must be a path like: /project/venv/lib/python3.9/site-packages
         """
         packages = pkg_resources.find_distributions(path)
+
         return packages
 
     @staticmethod
     def get_package_object(package):
-        """Returns a package object from Pip.
-        """
+        """Returns a package object from Pip."""
         package_object = pkg_resources.get_distribution(package)
+
         return package_object
 
     @staticmethod
     def get_package_details(package):
-        """Build a dictionary of details for a package from Pip.
-        """
+        """Build a dictionary of details for a package from Pip."""
         package_update_at = time.ctime(os.path.getctime(package.location))
         requires_list = [sorted(str(requirement) for requirement in package.requires())]
         package_details = {
@@ -85,6 +81,7 @@ class PipTree():
             'updated': datetime.datetime.strptime(package_update_at, "%a %b %d %H:%M:%S %Y").strftime("%Y-%m-%d"),
             'requires': [item for sublist in requires_list for item in sublist],
         }
+
         return package_details
 
     @staticmethod
@@ -100,11 +97,8 @@ class PipTree():
             if required_by_dict.get(required_by_package_name):
                 required_by_dict[required_by_package_name].append(package_details['name'])
             else:
-                required_by_dict.update(
-                    {
-                        required_by_package_name: [package_details['name']]
-                    }
-                )
+                required_by_dict.update({required_by_package_name: [package_details['name']]})
+
         return required_by_dict
 
 

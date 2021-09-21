@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.1.0 (2021-09-20)
+
+* Drops support for Python 3.6
+* Removes unused `mock` library
+
 ## v1.0.0 (2021-05-13)
 
 * Switched from shelling out to Pip to using the internal Pip API natively via Python (closes #4 and closes #2), this change makes the previous ~1 minute operation now take ~1 second!

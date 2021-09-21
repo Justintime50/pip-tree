@@ -6,14 +6,13 @@ with open('README.md', 'r') as fh:
 DEV_REQUIREMENTS = [
     'coveralls == 3.*',
     'flake8',
-    'mock == 4.*',
     'pytest == 6.*',
     'pytest-cov == 2.*',
 ]
 
 setuptools.setup(
     name='pip-tree',
-    version='1.0.0',
+    version='1.1.0',
     description='Get the dependency tree of your Python virtual environment via Pip.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -27,12 +26,12 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     extras_require={
-        'dev': DEV_REQUIREMENTS
+        'dev': DEV_REQUIREMENTS,
     },
     entry_points={
         'console_scripts': [
-            'pip-tree=pip_tree.tree:main'
-        ]
+            'pip-tree=pip_tree.tree:main',
+        ],
     },
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )
