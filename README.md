@@ -23,9 +23,6 @@ pip3 install pip-tree
 
 # Install locally
 make install
-
-# Get Makefile help
-make help
 ```
 
 ## Usage
@@ -99,12 +96,6 @@ Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib
 ## Development
 
 ```bash
-# Lint the project
-make lint
-
-# Run tests
-make test
-
-# Run test coverage
-make coverage
+# Get a comprehensive list of development tools
+make help
 ```
