@@ -52,7 +52,7 @@ for package in package_list:
 
 **Sample Output**
 
-```json
+```bash
 Generating Pip Tree Report...
 
 [
