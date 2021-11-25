@@ -20,19 +20,19 @@ main() {
 generate_pip_list() {
     # Create and format the package list from Pip
     mkdir -p "$PIPPIN_TMP_FOLDER"
-    "$PIPPIN_PIP" list --no-python-version-warning --disable-pip-version-check > "$PIPPIN_TMP_FOLDER/$PIPPIN_LIST"
-    sed -i.bak '1,2d' "$PIPPIN_TMP_FOLDER/$PIPPIN_LIST" # Remove the headers from the pip package list
+    "$PIPPIN_PIP" list --no-python-version-warning --disable-pip-version-check >"$PIPPIN_TMP_FOLDER/$PIPPIN_LIST"
+    sed -i.bak '1,2d' "$PIPPIN_TMP_FOLDER/$PIPPIN_LIST"     # Remove the headers from the pip package list
     sed -i.bak 's/ .*$//' "$PIPPIN_TMP_FOLDER/$PIPPIN_LIST" # Remove the version numbers from the pip package list
 }
 
 breakdown_each_package() {
     # Iterate through each package from the pip list and print data
     while read -r line; do
-        "$PIPPIN_PIP" show --no-python-version-warning --disable-pip-version-check "$line" > "$PIPPIN_TMP_FOLDER/$PIPPIN_TMP_FILE"
+        "$PIPPIN_PIP" show --no-python-version-warning --disable-pip-version-check "$line" >"$PIPPIN_TMP_FOLDER/$PIPPIN_TMP_FILE"
         sed -i.bak '3,8d' "$PIPPIN_TMP_FOLDER/$PIPPIN_TMP_FILE" # Remove all rows but the "Name", "Requires", and "Required-by" fields
-        cat "$PIPPIN_TMP_FOLDER/$PIPPIN_TMP_FILE" >> "$PIPPIN_TMP_FOLDER/$PIPPIN_FINAL_LIST"
-        echo -e "" >> "$PIPPIN_TMP_FOLDER/$PIPPIN_FINAL_LIST"
-        (( PIPPIN_ITERATION_COUNT+=1 ))
+        cat "$PIPPIN_TMP_FOLDER/$PIPPIN_TMP_FILE" >>"$PIPPIN_TMP_FOLDER/$PIPPIN_FINAL_LIST"
+        echo -e "" >>"$PIPPIN_TMP_FOLDER/$PIPPIN_FINAL_LIST"
+        ((PIPPIN_ITERATION_COUNT += 1))
     done <"$PIPPIN_TMP_FOLDER/$PIPPIN_LIST"
 }
 

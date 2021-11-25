@@ -1,5 +1,2 @@
-[report]
-exclude_lines =
-    if __name__ == '__main__':
-    main()
-    PipTreeCli()
+[run]
+omit = pip_tree/cli.py

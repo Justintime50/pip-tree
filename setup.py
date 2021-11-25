@@ -14,7 +14,7 @@ DEV_REQUIREMENTS = [
 
 setuptools.setup(
     name='pip-tree',
-    version='1.1.0',
+    version='1.1.1',
     description='Get the dependency tree of your Python virtual environment via Pip.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -32,8 +32,8 @@ setuptools.setup(
     },
     entry_points={
         'console_scripts': [
-            'pip-tree=pip_tree.tree:main',
+            'pip-tree=pip_tree.cli:main',
         ],
     },
-    python_requires='>=3.7',
+    python_requires='>=3.7, <4',
 )

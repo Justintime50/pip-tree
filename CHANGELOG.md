@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.1.1 (2021-11-25)
+
+* Refactored code
+    * Removed an entire loop and function, now Pip Tree will run even faster
+    * Broke out `cli` logic to a separate module
+    * Use smarter enumeration for package count
+* Added type hinting
+
 ## v1.1.0 (2021-09-20)
 
 * Drops support for Python 3.6
