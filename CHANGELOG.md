@@ -1,12 +1,14 @@
 # CHANGELOG
 
-## v1.1.1 (2021-11-25)
+## v2.0.0 (2021-11-25)
 
 * Refactored code
+    * Unwrapped functions from `PipTree` class, exposed them outside the package
     * Removed an entire loop and function, now Pip Tree will run even faster
     * Broke out `cli` logic to a separate module
     * Use smarter enumeration for package count
 * Added type hinting
+* Updated documentation
 
 ## v1.1.0 (2021-09-20)
 

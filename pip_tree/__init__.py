@@ -1,9 +1,8 @@
 # flake8: noqa
-from pip_tree.tree import PipTree
+from pip_tree.tree import generate_pip_tree, get_package_details, get_pip_package_list
 
 __all__ = [
-    PipTree.generate_pip_tree,
-    PipTree.generate_reverse_requires_field,
-    PipTree.get_package_details,
-    PipTree.get_pip_package_list,
+    generate_pip_tree,
+    get_package_details,
+    get_pip_package_list,
 ]

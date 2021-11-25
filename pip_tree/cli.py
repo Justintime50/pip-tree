@@ -1,7 +1,7 @@
 import argparse
 import json
 
-from pip_tree import PipTree
+import pip_tree
 
 
 class PipTreeCli:
@@ -21,8 +21,11 @@ class PipTreeCli:
     def generate_console_output(self):
         """Take the output of the dependency tree and print to console."""
         print('Generating Pip Tree report...')
-        final_output, package_count = PipTree.generate_pip_tree(self.path)
-        print(json.dumps(final_output, indent=4))
+
+        final_output, package_count = pip_tree.generate_pip_tree(self.path)
+        console_output = json.dumps(final_output, indent=4)
+
+        print(console_output)
         print(f'Pip Tree report complete! {package_count} dependencies found for "{self.path}".')
 
 

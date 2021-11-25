@@ -36,20 +36,6 @@ Options:
     -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment.
 ```
 
-**Package**
-
-```python
-from pip_tree import PipTree
-
-path = 'path/to/my_project/venv/lib/python3.9/site-packages'
-
-package_list = PipTree.get_pip_package_list(path)
-for package in package_list:
-    package_object = PipTree.get_package_object(package)
-    package_details = PipTree.get_package_details(package_object)
-    print(package_details.project_name)
-```
-
 **Sample Output**
 
 ```bash
@@ -91,6 +77,21 @@ Generating Pip Tree Report...
 ]
 
 Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
+```
+
+**Package**
+
+In addition to the CLI tool, you can use functions to retrieve the list of packages and their details from a Python virtual environment in your own code:
+
+```python
+import pip_tree
+
+path = 'path/to/my_project/venv/lib/python3.9/site-packages'
+
+package_list = pip_tree.get_pip_package_list(path)
+for package in package_list:
+    package_details = pip_tree.get_package_details(package)
+    print(package_details['name'])
 ```
 
 ## Development
