@@ -11,7 +11,11 @@ def test_get_package_details():
     dependencies (such as pip itself being a different version in build systems),
     so we simply assert that certain attributes exist for a package such as `pytest`.
     """
-    python_version = sys.version.split(' ')[0][:3]  # Get the Python version of the invoking process of the tests
+    # Get the Python version of the invoking process of the tests
+    full_python_version = sys.version.split(' ')[0]  # eg: 3.10.0
+    python_version_numbers = [number for number in full_python_version.split('.')]  # eg: [3, 10, 0]
+    python_version = '.'.join(python_version_numbers[:-1])  # eg: 3.10
+
     pip_path = f'./venv/lib/python{python_version}/site-packages'
     package_details, package_count = pip_tree.generate_pip_tree(pip_path)
 
