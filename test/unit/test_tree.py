@@ -1,6 +1,6 @@
 import sys
 
-from pip_tree import PipTree
+import pip_tree
 
 
 def test_get_package_details():
@@ -13,7 +13,7 @@ def test_get_package_details():
     """
     python_version = sys.version.split(' ')[0][:3]  # Get the Python version of the invoking process of the tests
     pip_path = f'./venv/lib/python{python_version}/site-packages'
-    package_details, package_count = PipTree.generate_pip_tree(pip_path)
+    package_details, package_count = pip_tree.generate_pip_tree(pip_path)
 
     assert any(item['name'] == 'pytest-cov' for item in package_details)
     assert any('toml' in item['requires'] for item in package_details)
