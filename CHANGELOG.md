@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.1 (2021-11-25)
+
+* Small bug fix to change the types of functions available in the `__all__` variable to strings
+
 ## v2.0.0 (2021-11-25)
 
 * Refactored code

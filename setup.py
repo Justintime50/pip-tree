@@ -14,7 +14,7 @@ DEV_REQUIREMENTS = [
 
 setuptools.setup(
     name='pip-tree',
-    version='2.0.0',
+    version='2.0.1',
     description='Get the dependency tree of your Python virtual environment via Pip.',
     long_description=long_description,
     long_description_content_type="text/markdown",
