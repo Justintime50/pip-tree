@@ -2,15 +2,15 @@ import datetime
 import os
 import re
 import time
-from typing import Dict, List, Tuple
+from typing import Any, Dict, Generator, List, Tuple
 
 import pkg_resources
 
 
-def generate_pip_tree(path: str) -> Tuple[Dict, int]:
+def generate_pip_tree(path: str) -> Tuple[List[Dict[str, Any]], int]:
     """Generate the Pip Tree of the virtual environment specified."""
     pip_tree_results = []
-    required_by_data = {}
+    required_by_data: Dict[str, List[str]] = {}
     package_count = 0
 
     packages = get_pip_package_list(path)
@@ -29,7 +29,7 @@ def generate_pip_tree(path: str) -> Tuple[Dict, int]:
     return final_output, package_count
 
 
-def get_pip_package_list(path: str) -> List[pkg_resources.DistInfoDistribution]:
+def get_pip_package_list(path: str) -> Generator[pkg_resources.Distribution, None, None]:
     """Get the Pip package list of a Python virtual environment.
 
     Must be a path like: /project/venv/lib/python3.9/site-packages
@@ -39,7 +39,7 @@ def get_pip_package_list(path: str) -> List[pkg_resources.DistInfoDistribution]:
     return packages
 
 
-def get_package_details(package: pkg_resources.DistInfoDistribution) -> Dict:
+def get_package_details(package: pkg_resources.Distribution) -> Dict[str, Any]:
     """Build a dictionary of details for a package from Pip."""
     package_updated_at = time.ctime(os.path.getctime(package.location))
     requires_list = [sorted(str(requirement) for requirement in package.requires())]
@@ -54,14 +54,18 @@ def get_package_details(package: pkg_resources.DistInfoDistribution) -> Dict:
     return package_details
 
 
-def _generate_reverse_requires_field(required_by_data: Dict, package_details: Dict):
+def _generate_reverse_requires_field(required_by_data: Dict[str, List[str]], package_details: Dict[str, Any]):
     """Generate a reversed list from the `requires` fields and create a
     collection of each `required_by` fields so each package can show what it's required by.
     """
     requires_list = [item for item in package_details['requires']]
     for required_by_package in requires_list:
         word = re.compile(r'^(\w)+')
-        required_by_package_name = word.match(required_by_package).group()
+        name_match = word.match(required_by_package)
+        if name_match is not None:
+            required_by_package_name = name_match.group()
+        else:
+            required_by_package_name = ''
 
         # If a package is listed, append to it, otherwise create a new list
         if required_by_data.get(required_by_package_name):

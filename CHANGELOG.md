@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.2 (2021-12-02)
+
+* Adds `mypy` type checking and fixes types
+* Fixes a potential bug when regex pattern matching on package names would result in `None`
+
 ## v2.0.1 (2021-11-25)
 
 * Small bug fix to change the types of functions available in the `__all__` variable to strings
