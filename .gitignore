@@ -1,6 +1,7 @@
-.DS_Store
-venv
-htmlcov
-*.egg-info
 __pycache__
 .coverage
+.DS_Store
+*.egg-info
+dist
+htmlcov
+venv
