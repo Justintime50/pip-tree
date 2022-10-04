@@ -2,7 +2,13 @@ import datetime
 import os
 import re
 import time
-from typing import Any, Dict, Generator, List, Tuple
+from typing import (
+    Any,
+    Dict,
+    Generator,
+    List,
+    Tuple,
+)
 
 import pkg_resources
 

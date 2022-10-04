@@ -1,9 +1,11 @@
 import setuptools
 
+
 with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 DEV_REQUIREMENTS = [
+    'bandit == 1.7.*',
     'black == 22.*',
     'build == 0.7.*',
     'coveralls == 3.*',
