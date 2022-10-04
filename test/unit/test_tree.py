@@ -22,4 +22,4 @@ def test_get_package_details():
     assert any(item['name'] == 'pytest' for item in package_details)
     assert any([] == item['requires'] for item in package_details)
     assert any('pytest' in item['required_by'] for item in package_details)
-    assert 30 < package_count < 60  # Assert the package count is within a reasonable number for this package
+    assert 55 < package_count < 75  # Assert the package count is within a reasonable number for this package
