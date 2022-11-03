@@ -2,6 +2,7 @@ __pycache__
 .coverage
 .DS_Store
 *.egg-info
+*.lcov
 dist
 htmlcov
 venv
