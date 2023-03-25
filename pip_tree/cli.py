@@ -12,9 +12,10 @@ class PipTreeCli:
         parser.add_argument(
             '-p',
             '--path',
-            required=True,
+            required=False,
+            default=pip_tree.SITE_PACKAGES_PATH,
             type=str,
-            help='The path to the site-packages directory of a Python virtual environment.',
+            help='The path to the site-packages directory of a Python virtual environment. If a path is not provided, the virtual environment Pip Tree is run from will be used.',  # noqa
         )
         parser.parse_args(namespace=self)
 

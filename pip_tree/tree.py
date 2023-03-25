@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+import sysconfig
 import time
 from typing import (
     Any,
@@ -13,7 +14,10 @@ from typing import (
 import pkg_resources
 
 
-def generate_pip_tree(path: str) -> Tuple[List[Dict[str, Any]], int]:
+SITE_PACKAGES_PATH = sysconfig.get_paths()['platlib']
+
+
+def generate_pip_tree(path: str = SITE_PACKAGES_PATH) -> Tuple[List[Dict[str, Any]], int]:
     """Generate the Pip Tree of the virtual environment specified."""
     pip_tree_results = []
     required_by_data: Dict[str, List[str]] = {}
@@ -35,7 +39,7 @@ def generate_pip_tree(path: str) -> Tuple[List[Dict[str, Any]], int]:
     return final_output, package_count
 
 
-def get_pip_package_list(path: str) -> Generator[pkg_resources.Distribution, None, None]:
+def get_pip_package_list(path: str = SITE_PACKAGES_PATH) -> Generator[pkg_resources.Distribution, None, None]:
     """Get the Pip package list of a Python virtual environment.
 
     Must be a path like: /project/venv/lib/python3.9/site-packages

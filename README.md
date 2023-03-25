@@ -18,8 +18,11 @@ There is no simple, native way to get the dependency tree of a Python virtual en
 ## Install
 
 ```bash
-# Install Pip Tree
+# Install Pip Tree globally
 pip3 install pip-tree
+
+# Install Pip Tree into the virtual environment of the project you want to run it on
+venv/bin/pip install pip-tree
 
 # Install locally
 make install
@@ -27,16 +30,19 @@ make install
 
 ## Usage
 
-```
-Usage:
+```text
+Virtual Env Usage:
+    pip-tree
+
+Global Usage:
     pip-tree --path "path/to/my_project/venv/lib/python3.9/site-packages"
 
 Options:
     -h, --help            show this help message and exit
-    -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment.
+    -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment. If a path is not provided, the virtual environment Pip Tree is run from will be used.
 ```
 
-**Sample Output**
+### Sample Output
 
 ```bash
 Generating Pip Tree Report...
@@ -79,7 +85,7 @@ Generating Pip Tree Report...
 Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
 ```
 
-**Package**
+### Package
 
 In addition to the CLI tool, you can use functions to retrieve the list of packages and their details from a Python virtual environment in your own code:
 
