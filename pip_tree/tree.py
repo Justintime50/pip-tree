@@ -72,10 +72,7 @@ def _generate_reverse_requires_field(required_by_data: Dict[str, List[str]], pac
     for required_by_package in requires_list:
         word = re.compile(r'^(\w)+')
         name_match = word.match(required_by_package)
-        if name_match is not None:
-            required_by_package_name = name_match.group()
-        else:
-            required_by_package_name = ''
+        required_by_package_name = name_match.group() if name_match is not None else ''
 
         # If a package is listed, append to it, otherwise create a new list
         if required_by_data.get(required_by_package_name):

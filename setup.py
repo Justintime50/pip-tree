@@ -7,10 +7,10 @@ with open('README.md', 'r') as fh:
 DEV_REQUIREMENTS = [
     'bandit == 1.7.*',
     'black == 22.*',
-    'build == 0.7.*',
-    'flake8 == 4.*',
+    'build == 0.10.*',
+    'flake8 == 5.*',
     'isort == 5.*',
-    'mypy == 0.942',
+    'mypy == 1.1.*',
     'pytest == 7.*',
     'pytest-cov == 4.*',
     'twine == 4.*',
