@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.0 (2023-07-01)
+
+- Drop support for Python 3.7
+
 ## v2.1.0 (2023-03-25)
 
 - Makes the `path` CLI arg optional, the default value is now the virtual environment that Pip Tree is running from meaning that you can install Pip Tree to a project and run it without needing to specify the `site-packages` directory explicitly
