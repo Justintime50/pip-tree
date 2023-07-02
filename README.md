@@ -25,7 +25,7 @@ pip3 install pip-tree
 venv/bin/pip install pip-tree
 
 # Install locally
-make install
+just install
 ```
 
 ## Usage
@@ -104,5 +104,5 @@ for package in package_list:
 
 ```bash
 # Get a comprehensive list of development tools
-make help
+just --list
 ```

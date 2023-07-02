@@ -3,22 +3,18 @@ name: release
 on:
   push:
     tags:
-      - "*"
+      - '*'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - uses: actions/checkout@v3
+      - uses: extractions/setup-just@v1
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
-      - name: Build package
-        run: |
-          make install
-          make build
+          python-version: '3.11'
+      - run: just install build
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
