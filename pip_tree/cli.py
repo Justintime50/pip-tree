@@ -2,6 +2,7 @@ import argparse
 import json
 
 import pip_tree
+from pip_tree._version import __version__
 
 
 class PipTreeCli:
@@ -19,6 +20,11 @@ class PipTreeCli:
                 'The path to the site-packages directory of a Python virtual environment. If a path is not provided,'
                 ' the virtual environment Pip Tree is run from will be used.'
             ),
+        )
+        parser.add_argument(
+            '--version',
+            action='version',
+            version=f'%(prog)s {__version__}',
         )
         parser.parse_args(namespace=self)
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.0 (2023-08-24)
+
+- Adds `--version` flag
+
 ## v3.0.0 (2023-07-01)
 
 - Drop support for Python 3.7

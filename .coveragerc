@@ -1,2 +1,4 @@
 [run]
-omit = pip_tree/cli.py
+omit =
+    pip_tree/cli.py
+    pip_tree/_version.py
