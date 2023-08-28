@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.1 (2023-08-27)
+
+- Expand paths for user-supplied strings. This now allows for spaces in paths and proper expansion of home directories (eg: `~`)
+
 ## v3.1.0 (2023-08-24)
 
 - Adds `--version` flag

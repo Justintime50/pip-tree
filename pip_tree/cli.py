@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 
 import pip_tree
 from pip_tree._version import __version__
@@ -32,7 +33,7 @@ class PipTreeCli:
         """Take the output of the dependency tree and print to console."""
         print('Generating Pip Tree report...')
 
-        final_output, package_count = pip_tree.generate_pip_tree(self.path)
+        final_output, package_count = pip_tree.generate_pip_tree(os.path.expanduser(self.path))
         console_output = json.dumps(final_output, indent=4)
 
         print(console_output)
