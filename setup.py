@@ -23,6 +23,7 @@ DEV_REQUIREMENTS = [
     'mypy == 1.5.*',
     'pytest == 7.*',
     'pytest-cov == 4.*',
+    'setuptools == 68.*',
     'twine == 4.*',
     'types-setuptools',
 ]

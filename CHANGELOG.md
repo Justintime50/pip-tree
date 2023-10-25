@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.2.0 (2023-10-25)
+
+- Adds support for Python 3.12
+
 ## v3.1.1 (2023-08-27)
 
 - Expand paths for user-supplied strings. This now allows for spaces in paths and proper expansion of home directories (eg: `~`)
