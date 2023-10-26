@@ -44,9 +44,8 @@ Options:
 
 ### Sample Output
 
-```bash
 Generating Pip Tree Report...
-
+```json
 [
     {
         "name": "docopt",
@@ -81,9 +80,8 @@ Generating Pip Tree Report...
         "required_by": []
     }
 ]
-
-Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
 ```
+Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
 
 ### Package
 
