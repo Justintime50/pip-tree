@@ -3,13 +3,33 @@ preview = true
 line-length = 120
 skip-string-normalization = true
 
-[tool.isort]
-profile = "black"
-line_length = 120
-indent = 4
-force_grid_wrap = 2
-multi_line_output = 3
-sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
-lines_after_imports = 2
-include_trailing_comma = true
-use_parentheses = true
+
+[tool.ruff]
+ line-length = 120
+ select = [
+    "E", "W",  # see: https://pypi.org/project/pycodestyle
+    "F",  # see: https://pypi.org/project/pyflakes
+    "I",  #see: https://pypi.org/project/isort/
+    "S",  # see: https://pypi.org/project/flake8-bandit
+ #   "D",  # see: https://pypi.org/project/pydocstyle
+ ]
+# todo
+# extend-select = [
+#    "A",  # see: https://pypi.org/project/flake8-builtins
+#    "B",  # see: https://pypi.org/project/flake8-bugbear
+#    "C4",  # see: https://pypi.org/project/flake8-comprehensions
+#    "PT",  # see: https://pypi.org/project/flake8-pytest-style
+#    "RET",  # see: https://pypi.org/project/flake8-return
+#    "SIM",  # see: https://pypi.org/project/flake8-simplify
+# ]
+ ignore = [
+     "E731",
+ ]
+ ignore-init-module-imports = true
+
+[tool.ruff.pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+[tool.ruff.mccabe]
+max-complexity = 10

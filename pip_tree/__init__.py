@@ -1,4 +1,3 @@
-# flake8: noqa
 from pip_tree.tree import (
     SITE_PACKAGES_PATH,
     generate_pip_tree,

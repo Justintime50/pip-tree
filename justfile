@@ -4,10 +4,6 @@ VIRTUAL_BIN := VIRTUAL_ENV / "bin"
 PROJECT_NAME := "pip_tree"
 TEST_DIR := "test"
 
-# Scans the project for security vulnerabilities
-bandit:
-    {{VIRTUAL_BIN}}/bandit -r {{PROJECT_NAME}}/
-
 # Builds the project in preparation for release
 build:
     {{VIRTUAL_BIN}}/python -m build
@@ -29,28 +25,20 @@ clean:
     rm -rf {{VIRTUAL_ENV}} dist *.egg-info .coverage htmlcov .*cache
     find . -name '*.pyc' -delete
 
-# Run flake8 checks against the project
-flake8:
-    {{VIRTUAL_BIN}}/flake8 {{PROJECT_NAME}}/ {{TEST_DIR}}/
+# Run Ruff checks against the project
+ruff:
+    {{VIRTUAL_BIN}}/ruff {{PROJECT_NAME}}/ {{TEST_DIR}}/
 
 # Lints the project
-lint: black-check isort-check flake8 mypy bandit
+lint: black-check ruff mypy
 
 # Runs all formatting tools against the project
-lint-fix: black isort
+lint-fix: black
 
 # Install the project locally
 install:
     {{PYTHON_BINARY}} -m venv {{VIRTUAL_ENV}}
     {{VIRTUAL_BIN}}/pip install -e ."[dev]"
-
-# Sorts imports throughout the project
-isort:
-    {{VIRTUAL_BIN}}/isort {{PROJECT_NAME}}/ {{TEST_DIR}}/
-
-# Checks that imports throughout the project are sorted correctly
-isort-check:
-    {{VIRTUAL_BIN}}/isort {{PROJECT_NAME}}/ {{TEST_DIR}}/ --check-only
 
 # Run mypy type checking on the project
 mypy:
