@@ -44,7 +44,7 @@ Options:
 
 ### Sample Output
 
-```bash
+```text
 Generating Pip Tree Report...
 
 [
