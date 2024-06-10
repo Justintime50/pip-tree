@@ -51,7 +51,7 @@ def get_pip_package_list(path: str = SITE_PACKAGES_PATH) -> Generator[pkg_resour
 
 def get_package_details(package: pkg_resources.Distribution) -> Dict[str, Any]:
     """Build a dictionary of details for a package from Pip."""
-    package_updated_at = time.ctime(os.path.getctime(package.location))
+    package_updated_at = time.ctime(os.path.getctime(package.location))  # type: ignore
     requires_list = [sorted(str(requirement) for requirement in package.requires())]
 
     package_details = {
