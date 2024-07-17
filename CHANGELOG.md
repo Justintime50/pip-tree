@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v4.0.0 (2024-07-17)
+
+- Remove reliance on `pkg_resources` from `setuptools` and instead uses the `importlib.metadata` module which is builtin
+  - Corrects potential issues on Python 3.12+ if `setuptools` wasn't already in the environment
+
 ## v3.2.0 (2023-10-25)
 
 - Adds support for Python 3.12

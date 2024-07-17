@@ -3,15 +3,17 @@ import os
 import re
 import sysconfig
 import time
+from importlib.metadata import (
+    Distribution,
+    distributions,
+)
 from typing import (
     Any,
     Dict,
-    Generator,
+    Iterable,
     List,
     Tuple,
 )
-
-import pkg_resources
 
 
 SITE_PACKAGES_PATH = sysconfig.get_paths()['platlib']
@@ -39,26 +41,40 @@ def generate_pip_tree(path: str = SITE_PACKAGES_PATH) -> Tuple[List[Dict[str, An
     return final_output, package_count
 
 
-def get_pip_package_list(path: str = SITE_PACKAGES_PATH) -> Generator[pkg_resources.Distribution, None, None]:
+def get_pip_package_list(path: str = SITE_PACKAGES_PATH) -> Iterable[Distribution]:
     """Get the Pip package list of a Python virtual environment.
 
-    Must be a path like: /project/venv/lib/python3.9/site-packages
+    Must be a path like: /project/venv/lib/python3.12/site-packages
     """
-    packages = pkg_resources.find_distributions(path)
+    packages = distributions(path=[path])
 
     return packages
 
 
-def get_package_details(package: pkg_resources.Distribution) -> Dict[str, Any]:
+def get_package_details(package: Distribution) -> Dict[str, Any]:
     """Build a dictionary of details for a package from Pip."""
-    package_updated_at = time.ctime(os.path.getctime(package.location))  # type: ignore
-    requires_list = [sorted(str(requirement) for requirement in package.requires())]
+    package_location = package._path  # type:ignore
+    package_updated_at = (
+        time.ctime(os.path.getctime(package_location))
+        if package_location and os.path.exists(package_location)
+        else 'unknown'
+    )
+
+    requires_list = (
+        [sorted(str(requirement.replace(' ', '').split(';')[0]) for requirement in package.requires)]
+        if package.requires
+        else []
+    )
 
     package_details = {
-        'name': package.project_name,
-        'version': package.version,
-        'updated': datetime.datetime.strptime(package_updated_at, "%a %b %d %H:%M:%S %Y").strftime("%Y-%m-%d"),
-        'requires': [item for sublist in requires_list for item in sublist],
+        'name': package.metadata['Name'],
+        'version': package.metadata['Version'],
+        'updated': (
+            datetime.datetime.strptime(package_updated_at, "%a %b %d %H:%M:%S %Y").strftime("%Y-%m-%d")
+            if package_updated_at != 'unknown'
+            else 'unknown'
+        ),
+        'requires': sorted([item for sublist in requires_list for item in set(sublist)]),
     }
 
     return package_details
@@ -74,8 +90,10 @@ def _generate_reverse_requires_field(required_by_data: Dict[str, List[str]], pac
         name_match = word.match(required_by_package)
         required_by_package_name = name_match.group() if name_match is not None else ''
 
-        # If a package is listed, append to it, otherwise create a new list
-        if required_by_data.get(required_by_package_name):
-            required_by_data[required_by_package_name].append(package_details['name'])
+        # If a package is listed, add to its set, otherwise create a new set
+        if required_by_package_name in required_by_data:
+            required_by_data[required_by_package_name].add(package_details['name'])
         else:
-            required_by_data.update({required_by_package_name: [package_details['name']]})
+            required_by_data[required_by_package_name] = {package_details['name']}
+
+    required_by_data = {key: set(value) for key, value in required_by_data.items()}

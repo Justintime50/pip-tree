@@ -73,16 +73,16 @@ Generating Pip Tree Report...
         "version": "2.0.0",
         "updated": "2021-05-12",
         "requires": [
-            "itsdangerous>=2.0",
             "click>=7.1.2",
-            "Werkzeug>=2.0",
+            "itsdangerous>=2.0",
             "Jinja2>=3.0"
+            "Werkzeug>=2.0",
         ],
         "required_by": []
     }
 ]
 
-Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.9/site-packages".
+Pip Tree report complete! 40 dependencies found for "path/to/my_project/venv/lib/python3.12/site-packages".
 ```
 
 ### Package
@@ -92,7 +92,7 @@ In addition to the CLI tool, you can use functions to retrieve the list of packa
 ```python
 import pip_tree
 
-path = 'path/to/my_project/venv/lib/python3.9/site-packages'
+path = 'path/to/my_project/venv/lib/python3.12/site-packages'
 
 package_list = pip_tree.get_pip_package_list(path)
 for package in package_list:
