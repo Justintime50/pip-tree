@@ -4,6 +4,7 @@
 
 - Remove reliance on `pkg_resources` from `setuptools` and instead uses the `importlib.metadata` module which is builtin
   - Corrects potential issues on Python 3.12+ if `setuptools` wasn't already in the environment
+- Sorts `requires` and `required_by` in output
 
 ## v3.2.0 (2023-10-25)
 
