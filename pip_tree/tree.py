@@ -12,6 +12,7 @@ from typing import (
     Dict,
     Iterable,
     List,
+    Set,
     Tuple,
 )
 
@@ -22,7 +23,7 @@ SITE_PACKAGES_PATH = sysconfig.get_paths()['platlib']
 def generate_pip_tree(path: str = SITE_PACKAGES_PATH) -> Tuple[List[Dict[str, Any]], int]:
     """Generate the Pip Tree of the virtual environment specified."""
     pip_tree_results = []
-    required_by_data: Dict[str, List[str]] = {}
+    required_by_data: Dict[str, Set[str]] = {}
     package_count = 0
 
     packages = get_pip_package_list(path)
@@ -80,7 +81,7 @@ def get_package_details(package: Distribution) -> Dict[str, Any]:
     return package_details
 
 
-def _generate_reverse_requires_field(required_by_data: Dict[str, List[str]], package_details: Dict[str, Any]):
+def _generate_reverse_requires_field(required_by_data: Dict[str, Set[str]], package_details: Dict[str, Any]):
     """Generate a reversed list from the `requires` fields and create a
     collection of each `required_by` fields so each package can show what it's required by.
     """
