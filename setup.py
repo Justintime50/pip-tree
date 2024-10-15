@@ -16,16 +16,14 @@ with open('pip_tree/_version.py', 'r') as version_file:
 
 DEV_REQUIREMENTS = [
     'bandit == 1.7.*',
-    'black == 23.*',
-    'build == 0.10.*',
-    'flake8 == 6.*',
+    'black == 24.*',
+    'build == 1.2.*',
+    'flake8 == 7.*',
     'isort == 5.*',
-    'mypy == 1.5.*',
-    'pytest == 7.*',
-    'pytest-cov == 4.*',
-    'setuptools == 68.*',
-    'twine == 4.*',
-    'types-setuptools',
+    'mypy == 1.12.*',
+    'pytest == 8.*',
+    'pytest-cov == 5.*',
+    'setuptools >= 68',
 ]
 
 setuptools.setup(
