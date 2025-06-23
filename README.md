@@ -18,6 +18,10 @@ There is no simple, native way to get the dependency tree of a Python virtual en
 ## Install
 
 ```bash
+# Homebrew install
+brew tap justintime50/formulas
+brew install pip-tree
+
 # Install Pip Tree globally
 pip3 install pip-tree
 
