@@ -44,6 +44,7 @@ Global Usage:
 Options:
     -h, --help            show this help message and exit
     -p PATH, --path PATH  The path to the site-packages directory of a Python virtual environment. If a path is not provided, the virtual environment Pip Tree is run from will be used.
+    --version             show program's version number and exit
 ```
 
 ### Sample Output
