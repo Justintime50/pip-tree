@@ -5,7 +5,7 @@
 Get the dependency tree of your Python virtual environment via Pip.
 
 [![Build Status](https://github.com/Justintime50/pip-tree/workflows/build/badge.svg)](https://github.com/Justintime50/pip-tree/actions)
-[![Coverage Status](https://coveralls.io/repos/github/Justintime50/pip-tree/badge.svg?branch=main)](https://coveralls.io/github/Justintime50/pip-tree?branch=main)
+[![Coverage Status](https://img.shields.io/codecov/c/github/justintime50/pip-tree)](https://app.codecov.io/github/Justintime50/pip-tree)
 [![PyPi](https://img.shields.io/pypi/v/pip-tree)](https://pypi.org/project/pip-tree/)
 [![Licence](https://img.shields.io/github/license/justintime50/pip-tree)](LICENSE)
 

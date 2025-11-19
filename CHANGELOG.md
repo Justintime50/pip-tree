@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v5.0.0 (2025-11-18)
+
+- Drops support for Python 3.8 and 3.9
+- Bumps deps
+
 ## v4.0.0 (2024-07-17)
 
 - Remove reliance on `pkg_resources` from `setuptools` and instead uses the `importlib.metadata` module which is builtin

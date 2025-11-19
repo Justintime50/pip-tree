@@ -17,7 +17,7 @@ from typing import (
 )
 
 
-SITE_PACKAGES_PATH = sysconfig.get_paths()['platlib']
+SITE_PACKAGES_PATH = sysconfig.get_paths()["platlib"]
 
 
 def generate_pip_tree(path: str = SITE_PACKAGES_PATH) -> Tuple[List[Dict[str, Any]], int]:
@@ -35,9 +35,9 @@ def generate_pip_tree(path: str = SITE_PACKAGES_PATH) -> Tuple[List[Dict[str, An
 
     # Append the `required_by` field to each record created from `_generate_reverse_requires_field()`
     for item in pip_tree_results:
-        item['required_by'] = sorted(required_by_data.get(item['name'], []))
+        item["required_by"] = sorted(required_by_data.get(item["name"], []))
 
-    final_output = sorted(pip_tree_results, key=lambda k: k['name'].lower())
+    final_output = sorted(pip_tree_results, key=lambda k: k["name"].lower())
 
     return final_output, package_count
 
@@ -58,24 +58,24 @@ def get_package_details(package: Distribution) -> Dict[str, Any]:
     package_updated_at = (
         time.ctime(os.path.getctime(package_location))
         if package_location and os.path.exists(package_location)
-        else 'unknown'
+        else "unknown"
     )
 
     requires_list = (
-        [sorted(str(requirement.replace(' ', '').split(';')[0]) for requirement in package.requires)]
+        [sorted(str(requirement.replace(" ", "").split(";")[0]) for requirement in package.requires)]
         if package.requires
         else []
     )
 
     package_details = {
-        'name': package.metadata['Name'],
-        'version': package.metadata['Version'],
-        'updated': (
+        "name": package.metadata["Name"],
+        "version": package.metadata["Version"],
+        "updated": (
             datetime.datetime.strptime(package_updated_at, "%a %b %d %H:%M:%S %Y").strftime("%Y-%m-%d")
-            if package_updated_at != 'unknown'
-            else 'unknown'
+            if package_updated_at != "unknown"
+            else "unknown"
         ),
-        'requires': sorted([item for sublist in requires_list for item in set(sublist)]),
+        "requires": sorted([item for sublist in requires_list for item in set(sublist)]),
     }
 
     return package_details
@@ -85,16 +85,16 @@ def _generate_reverse_requires_field(required_by_data: Dict[str, Set[str]], pack
     """Generate a reversed list from the `requires` fields and create a
     collection of each `required_by` fields so each package can show what it's required by.
     """
-    requires_list = [item for item in package_details['requires']]
+    requires_list = [item for item in package_details["requires"]]
     for required_by_package in requires_list:
-        word = re.compile(r'^(\w)+')
+        word = re.compile(r"^(\w)+")
         name_match = word.match(required_by_package)
-        required_by_package_name = name_match.group() if name_match is not None else ''
+        required_by_package_name = name_match.group() if name_match is not None else ""
 
         # If a package is listed, add to its set, otherwise create a new set
         if required_by_package_name in required_by_data:
-            required_by_data[required_by_package_name].add(package_details['name'])
+            required_by_data[required_by_package_name].add(package_details["name"])
         else:
-            required_by_data[required_by_package_name] = {package_details['name']}
+            required_by_data[required_by_package_name] = {package_details["name"]}
 
     required_by_data = {key: set(value) for key, value in required_by_data.items()}
