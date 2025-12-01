@@ -1,3 +1,40 @@
+[build-system]
+requires = ["setuptools>=80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pip-tree"
+description = "Get the dependency tree of your Python virtual environment via Pip."
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.10,<4"
+license = { text = "MIT" }
+authors = [{ name = "Justintime50" }]
+urls = { Homepage = "http://github.com/justintime50/pip-tree" }
+optional-dependencies = { dev = [
+    "bandit == 1.9.*",
+    "black == 25.*",
+    "build == 1.3.*",
+    "flake8 == 7.*",
+    "isort == 7.*",
+    "mypy == 1.18.*",
+    "pytest == 9.*",
+    "pytest-cov == 7.*",
+    "setuptools >= 80",
+] }
+
+[tool.setuptools.dynamic]
+version = { attr = "pip_tree._version.__version__" }
+
+[tool.setuptools.packages.find]
+exclude = ["examples", "test"]
+
+[tool.setuptools.package-data]
+"pip_tree" = ["py.typed"]
+
+[project.scripts]
+pip-tree = "pip_tree.cli:main"
+
 [tool.black]
 line-length = 120
 
