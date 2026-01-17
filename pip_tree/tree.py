@@ -16,7 +16,6 @@ from typing import (
     Tuple,
 )
 
-
 SITE_PACKAGES_PATH = sysconfig.get_paths()["platlib"]
 
 
